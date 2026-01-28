@@ -1,0 +1,10 @@
+github.com/FrameworkOSS/portal v0.0.0-20260128064008-86f8a0104e4d h1:CjPmUDTYLosI4QMDXbzlAKGv6kgPwz8/HgFxLSCG7r4=
+github.com/FrameworkOSS/portal v0.0.0-20260128064008-86f8a0104e4d/go.mod h1:IfeRYR2FUMmnnrdyrTePXWa77sEVICG5LaEpafLRUmI=
+github.com/JoshuaDoes/crunchio v0.0.4 h1:gHMvTT0rHCITPjhfxZ0huykyAUBnP94xzExyhnHcBCM=
+github.com/JoshuaDoes/crunchio v0.0.4/go.mod h1:Zk8lv1MlNNb5WpMcNSr8uBgleoE5G3PpXi6MD3JImOA=
+github.com/go-telegram/bot v1.18.0 h1:yQzv437DY42SYTPBY48RinAvwbmf1ox5QICskIYWCD8=
+github.com/go-telegram/bot v1.18.0/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
+github.com/google/go-cmp v0.5.6 h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=
+github.com/google/go-cmp v0.5.6/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/superwhiskers/crunch/v3 v3.5.7 h1:N9RLxaR65C36i26BUIpzPXGy2f6pQ7wisu2bawbKNqg=
+github.com/superwhiskers/crunch/v3 v3.5.7/go.mod h1:4ub2EKgF1MAhTjoOCTU4b9uLMsAweHEa89aRrfAypXA=
