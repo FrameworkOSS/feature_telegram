@@ -7,9 +7,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/FrameworkOSS/portal/features/commands"
-	"github.com/FrameworkOSS/portal/features/debugger"
-	"github.com/FrameworkOSS/portal/portal"
+	"github.com/FrameworkOSS/event"
+	commands "github.com/FrameworkOSS/feature_commands"
+	debugger "github.com/FrameworkOSS/feature_debugger"
 
 	tg "github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -21,11 +21,11 @@ type Telegram struct {
 	ctx   context.Context
 
 	lockResp sync.Mutex
-	resps    []*portal.Event
+	resps    []*event.Event
 	c        *commands.Commands
 }
 
-func (t *Telegram) handlerPortal(e *portal.Event) error {
+func (t *Telegram) handlerPortal(e *event.Event) error {
 	fmt.Printf("%s\n", debugger.DebugEvent(e))
 	if channel := e.GetChannel(); channel != "" {
 		ptr := strings.Split(channel, ":")
@@ -55,7 +55,7 @@ func (t *Telegram) handlerTelegram(ctx context.Context, b *tg.Bot, update *model
 				channel := fmt.Sprintf("%s:%d", t.ID(), msg.Chat.ID)
 				e, err := t.c.NewCommandLineEvent(t.ID(), strings.Split(text, " ")...)
 				if err != nil {
-					go t.storeResp(portal.NewEventError(t.ID(), err).SetChannel(channel))
+					go t.storeResp(event.NewEventError(t.ID(), err).SetChannel(channel))
 					return
 				}
 				e.SetChannel(channel)
@@ -103,7 +103,7 @@ func (t *Telegram) handlerTelegram(ctx context.Context, b *tg.Bot, update *model
 func NewTelegram(token string, c *commands.Commands) *Telegram {
 	t := new(Telegram)
 	t.token = token
-	t.resps = make([]*portal.Event, 0)
+	t.resps = make([]*event.Event, 0)
 	t.c = c
 	return t
 }
@@ -148,7 +148,7 @@ func (t *Telegram) Open() (err error) {
 	t.bot = bot
 	t.ctx = ctx
 
-	t.storeResp(portal.NewEventReady(t.ID(), true))
+	t.storeResp(event.NewEventReady(t.ID(), true))
 
 	return
 }
@@ -167,24 +167,24 @@ func (t *Telegram) Close() (errs []error, retry bool) {
 	return
 }
 
-func (t *Telegram) Input(e *portal.Event) error {
+func (t *Telegram) Input(e *event.Event) error {
 	go t.handlerPortal(e)
 	return nil
 }
 
-func (t *Telegram) Output() (e *portal.Event, err error) {
+func (t *Telegram) Output() (e *event.Event, err error) {
 	e = t.readResp()
 	return
 }
 
-func (t *Telegram) storeResp(e *portal.Event) {
+func (t *Telegram) storeResp(e *event.Event) {
 	e.SetProducer(t.ID())
 	t.lockResp.Lock()
 	defer t.lockResp.Unlock()
 	t.resps = append(t.resps, e)
 }
 
-func (t *Telegram) readResp() (e *portal.Event) {
+func (t *Telegram) readResp() (e *event.Event) {
 	t.lockResp.Lock()
 	defer t.lockResp.Unlock()
 	if len(t.resps) > 0 {
