@@ -10,6 +10,7 @@ import (
 	"github.com/FrameworkOSS/event"
 	commands "github.com/FrameworkOSS/feature_commands"
 	debugger "github.com/FrameworkOSS/feature_debugger"
+	"github.com/FrameworkOSS/feature_telegram/metadata"
 
 	tg "github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -109,27 +110,27 @@ func NewTelegram(token string, c *commands.Commands) *Telegram {
 }
 
 func (t *Telegram) API() int {
-	return 0
+	return metadata.API
 }
 
 func (t *Telegram) ID() string {
-	return "telegram"
+	return metadata.ID
 }
 
 func (t *Telegram) Name() string {
-	return "Telegram"
+	return metadata.Name
 }
 
 func (t *Telegram) Authors() []string {
-	return []string{"JoshuaDoes"}
+	return strings.Split(metadata.Authors, ",")
 }
 
 func (t *Telegram) Description() string {
-	return "Provides a bridge to a Telegram account to serve a command transport."
+	return metadata.Description
 }
 
 func (t *Telegram) Version() string {
-	return "v0.0.1"
+	return metadata.Version
 }
 
 func (t *Telegram) Open() (err error) {
